@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Shadows_By_The_Window.sln"
+    "dotnet.defaultSolution": "shadows-by-the-window.sln"
 }
