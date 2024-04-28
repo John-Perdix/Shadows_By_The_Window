@@ -1,4 +1,0 @@
-repository "shadows-by-the-window@john_perdix@cloud"
-  path "/"
-    br "/main"
-    co "/main"
