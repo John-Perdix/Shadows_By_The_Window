@@ -43,7 +43,7 @@ public class PressKeyOpenDoor : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("Interact"))
         {
             if (Action == true)
             {
