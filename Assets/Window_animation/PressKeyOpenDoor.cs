@@ -14,6 +14,9 @@ public class PressKeyOpenDoor : MonoBehaviour
     public bool Action = false;
     public bool windowClosed = true;
     public Animator animator;
+    public GameObject[] prefabsToInstantiate; // Array of prefabs to cycle through
+    private GameObject currentPrefabInstance; // Reference to the currently instantiated prefab
+    private int currentPrefabIndex = 0;
 
 
     void Start()
@@ -64,6 +67,17 @@ public class PressKeyOpenDoor : MonoBehaviour
                         DoorOpenSound.Play();
                         //Action = false;
                         windowClosed = false;
+
+                        //Manage adding new objects
+                        // Delete the previous prefab instance if it exists
+                        if (currentPrefabInstance != null)
+                        {
+                            Destroy(currentPrefabInstance);
+                        }
+                        // Instantiate the new prefab
+                        currentPrefabInstance = Instantiate(prefabsToInstantiate[currentPrefabIndex], transform.position, transform.rotation);
+                        // Move to the next prefab in the array
+                        currentPrefabIndex = (currentPrefabIndex + 1) % prefabsToInstantiate.Length;
                     }
                     else
                     {
@@ -89,23 +103,23 @@ public class PressKeyOpenDoor : MonoBehaviour
 
     }
 
-bool isAnimating = false;
-void CheckAnimation()
-{
-    // Get the current state information of the animator
-    AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
+    bool isAnimating = false;
+    void CheckAnimation()
+    {
+        // Get the current state information of the animator
+        AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
 
-    // Check if the animation is playing
-    if ((currentState.IsName("open-window") || currentState.IsName("close-window")) && currentState.normalizedTime < 1.0f)
-    {
-        // Set the flag to indicate that the animation is currently playing
-        isAnimating = true;
+        // Check if the animation is playing
+        if ((currentState.IsName("open-window") || currentState.IsName("close-window")) && currentState.normalizedTime < 1.0f)
+        {
+            // Set the flag to indicate that the animation is currently playing
+            isAnimating = true;
+        }
+        else
+        {
+            // Reset the flag if the animation has finished playing
+            isAnimating = false;
+        }
     }
-    else
-    {
-        // Reset the flag if the animation has finished playing
-        isAnimating = false;
-    }
-}
 
 }
