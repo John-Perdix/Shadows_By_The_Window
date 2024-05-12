@@ -121,5 +121,4 @@ public class PressKeyOpenDoor : MonoBehaviour
             isAnimating = false;
         }
     }
-
 }
