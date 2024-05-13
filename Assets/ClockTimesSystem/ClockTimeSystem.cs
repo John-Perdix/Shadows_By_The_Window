@@ -7,6 +7,8 @@ public class ClockTimeSystem : MonoBehaviour
 {
     public GameObject InstructionTime;
     public GameObject AnimeObject1;
+    public GameObject AnimejanelaEsq;
+    public GameObject AnimejanelaDir;
     public GameObject ThisTrigger;
     public AudioSource SoundFX;
     public bool Action = false;
@@ -14,11 +16,14 @@ public class ClockTimeSystem : MonoBehaviour
     public GameObject[] prefabsToInstantiate; // Array of prefabs to cycle through
     private GameObject currentPrefabInstance; // Reference to the currently instantiated prefab
     private int currentPrefabIndex = 0;
+    public PressKeyOpenDoor pressKeyOpenDoor;
 
 
     void Start()
     {
         InstructionTime.SetActive(false);
+        currentPrefabInstance = Instantiate(prefabsToInstantiate[currentPrefabIndex]);
+        currentPrefabIndex = (currentPrefabIndex + 1) % prefabsToInstantiate.Length;
 
     }
 
@@ -69,6 +74,14 @@ public class ClockTimeSystem : MonoBehaviour
                         currentPrefabInstance = Instantiate(prefabsToInstantiate[currentPrefabIndex], transform.position, transform.rotation);
                         // Move to the next prefab in the array
                         currentPrefabIndex = (currentPrefabIndex + 1) % prefabsToInstantiate.Length;
+
+
+                        pressKeyOpenDoor = FindObjectOfType<PressKeyOpenDoor>();
+                        bool closed = pressKeyOpenDoor.windowClosed;
+                        if(closed == false){
+                            AnimejanelaEsq.GetComponent<Animator>().Play("close-window");
+                            AnimejanelaDir.GetComponent<Animator>().Play("close-window-dir");
+                        }
                 //}
                 //ORIGINAL CODE
                 /*Instruction.SetActive(false);
