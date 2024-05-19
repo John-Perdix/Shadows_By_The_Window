@@ -30,7 +30,6 @@ public class OutlineSelection : MonoBehaviour
                 if (highlight.gameObject.GetComponent<Outline>() != null)
                 {
                     highlight.gameObject.GetComponent<Outline>().enabled = true;
-                     highlight.gameObject.GetComponent<Sound>().enabled = true;
                 }
                 else
                 {
@@ -57,6 +56,7 @@ public class OutlineSelection : MonoBehaviour
                 }
                 selection = raycastHit.transform;
                 selection.gameObject.GetComponent<Outline>().enabled = true;
+                highlight.gameObject.GetComponent<Sound>().enabled = true;
                 highlight = null;
             }
             else
