@@ -29,10 +29,10 @@ public class PlayerCam : MonoBehaviour
         float controllerX = Input.GetAxisRaw("RightStickHorizontal") * sensX * Time.deltaTime;
         float controllerY = Input.GetAxisRaw("RightStickVertical") * sensY * Time.deltaTime;
 
-        //yRotation += mouseX;
-        //xRotation -= mouseY;
-        yRotation += controllerX;
-        xRotation -= controllerY;
+        yRotation += mouseX;
+        xRotation -= mouseY;
+        /* yRotation += controllerX;
+        xRotation -= controllerY; */
 
         //Impedir que rode mais do que 150º verticalmente
         xRotation = Mathf.Clamp(xRotation, -75f, 75f);

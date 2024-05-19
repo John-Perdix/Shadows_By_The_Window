@@ -8,6 +8,8 @@ public class MenuPrincipalManager : MonoBehaviour
     [SerializeField] private string nomeDoLevelDeJogo;
     [SerializeField] private GameObject painelMenuPrincipal;
     [SerializeField] private GameObject painelOpcoes;
+    [SerializeField] private GameObject painelPauseMenu;
+    [SerializeField] private GameObject painelSettings;
 
     public void Jogar()
     {
@@ -20,16 +22,26 @@ public class MenuPrincipalManager : MonoBehaviour
         painelOpcoes.SetActive(true);
     }
 
-      public void SairOpcoes()
+    public void AbrirSettings()
+    {
+        painelPauseMenu.SetActive(false);
+        painelSettings.SetActive(true);
+    }
+
+    public void SairOpcoes()
     {
         painelOpcoes.SetActive(false);
         painelMenuPrincipal.SetActive(true);
-        
+    }
+
+    public void SairSettings()
+    {
+        painelSettings.SetActive(false);
+        painelPauseMenu.SetActive(true);
     }
 
     public void SairJogo()
     {
-        Debug.Log("Sair do jogo");
         Application.Quit();
     }
 
