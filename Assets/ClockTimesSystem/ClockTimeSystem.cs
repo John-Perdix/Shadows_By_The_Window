@@ -24,7 +24,6 @@ public class ClockTimeSystem : MonoBehaviour
         InstructionTime.SetActive(false);
         currentPrefabInstance = Instantiate(prefabsToInstantiate[currentPrefabIndex]);
         currentPrefabIndex = (currentPrefabIndex + 1) % prefabsToInstantiate.Length;
-
     }
 
     void OnTriggerEnter(Collider collision)
@@ -51,13 +50,6 @@ public class ClockTimeSystem : MonoBehaviour
         {
             if (Action == true)
             {
-                //add instruction close to true
-                //adicionar um bool para saber se está aberto ou fechado
-                //se esta fechado -> fazer a animação de abrir
-                //se estiver aberto -> fazer animação para fechar
-                //CheckAnimation();
-              //  if (!isAnimating)
-               // {
                         InstructionTime.SetActive(false);
                         AnimeObject1.GetComponent<Animator>().Play("ClockAnime");
                         //ThisTrigger.SetActive(false);
