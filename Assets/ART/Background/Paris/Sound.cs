@@ -10,10 +10,4 @@ public class Sound : MonoBehaviour
     {
         SoundFX.Play();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

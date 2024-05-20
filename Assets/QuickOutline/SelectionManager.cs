@@ -20,6 +20,8 @@ public class SelectionManager : MonoBehaviour
         Vector3 screenCenter = new (Screen.width / 2f, Screen.height / 2f, 0f);
         //Vector3 screenCenter = Camera.main.ScreenToViewportPoint(new Vector3(Screen.width/2f, Screen.height/2f, 0.0f));
         Ray ray = Camera.main.ScreenPointToRay(screenCenter);
+        Debug.DrawRay(ray.origin, ray.direction * 10f, Color.red);
+        
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit)){

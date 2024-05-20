@@ -40,6 +40,7 @@ public class PressKeyOpenDoor : MonoBehaviour
     void OnTriggerExit(Collider collision)
     {
         InstructionOpen.SetActive(false);
+        InstructionClose.SetActive(false);
         Action = false;
     }
 
