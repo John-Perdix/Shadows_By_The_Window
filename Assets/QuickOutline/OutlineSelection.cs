@@ -19,8 +19,10 @@ public class OutlineSelection : MonoBehaviour
             highlight = null;
         }
 
-        Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
-        Ray ray = Camera.main.ScreenPointToRay(screenCenter);
+      Vector3 screenCenter = new(Screen.width / 2f, Screen.height / 2f, 0f);
+
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        Debug.DrawRay(ray.origin, ray.direction * 10f, Color.red);
 
         if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out raycastHit)) //Make sure you have EventSystem in the hierarchy before using EventSystem
         {

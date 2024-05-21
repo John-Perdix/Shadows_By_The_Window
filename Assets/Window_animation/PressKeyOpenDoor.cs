@@ -40,6 +40,7 @@ public class PressKeyOpenDoor : MonoBehaviour
     void OnTriggerExit(Collider collision)
     {
         InstructionOpen.SetActive(false);
+        InstructionClose.SetActive(false);
         Action = false;
     }
 
@@ -50,10 +51,6 @@ public class PressKeyOpenDoor : MonoBehaviour
         {
             if (Action == true)
             {
-                //add instruction close to true
-                //adicionar um bool para saber se está aberto ou fechado
-                //se esta fechado -> fazer a animação de abrir
-                //se estiver aberto -> fazer animação para fechar
                 CheckAnimation();
                 if (!isAnimating)
                 {
