@@ -18,7 +18,6 @@ public class ClockTimeSystem : MonoBehaviour
     private int currentPrefabIndex = 0;
     public PressKeyOpenDoor pressKeyOpenDoor;
     PickUpScript pickupScript;
-    public GameObject book;
 
 
     void Start()
@@ -26,12 +25,12 @@ public class ClockTimeSystem : MonoBehaviour
         InstructionTime.SetActive(false);
         currentPrefabInstance = Instantiate(prefabsToInstantiate[currentPrefabIndex]);
         currentPrefabIndex = (currentPrefabIndex + 1) % prefabsToInstantiate.Length;
-        pickupScript = GameObject.Find("heldObj").GetComponent<PickUpScript>();
+        pickupScript = GameObject.Find("PlayerCam").GetComponent<PickUpScript>();
     }
 
     void OnTriggerEnter(Collider collision)
     {
-        if (collision.transform.CompareTag("Player"))
+        if (collision.transform.CompareTag("Player") && pickupScript.heldObj && pickupScript.heldObj.CompareTag("book"))
         {
             InstructionTime.SetActive(true);
             Action = true;
@@ -53,7 +52,7 @@ public class ClockTimeSystem : MonoBehaviour
         {
             if (Action == true)
             {
-                if (pickupScript.heldObj == book)
+                if (pickupScript.heldObj.CompareTag("book"))
                 {
                     InstructionTime.SetActive(false);
                     AnimeObject1.GetComponent<Animator>().Play("ClockAnime");
@@ -71,7 +70,6 @@ public class ClockTimeSystem : MonoBehaviour
                     currentPrefabInstance = Instantiate(prefabsToInstantiate[currentPrefabIndex], transform.position, transform.rotation);
                     // Move to the next prefab in the array
                     currentPrefabIndex = (currentPrefabIndex + 1) % prefabsToInstantiate.Length;
-
 
                     pressKeyOpenDoor = FindObjectOfType<PressKeyOpenDoor>();
                     bool closed = pressKeyOpenDoor.windowClosed;
