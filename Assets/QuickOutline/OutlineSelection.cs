@@ -7,8 +7,7 @@ public class OutlineSelection : MonoBehaviour
 {
     private Transform highlight;
     private Transform selection;
-    private RaycastHit raycastHit;
-    
+    private RaycastHit raycastHit;    
 
     void Update()
     {
@@ -27,7 +26,7 @@ public class OutlineSelection : MonoBehaviour
         if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out raycastHit)) //Make sure you have EventSystem in the hierarchy before using EventSystem
         {
             highlight = raycastHit.transform;
-            if (highlight.CompareTag("Selectable") && highlight != selection)
+            if (highlight.CompareTag("Selectable") || highlight.CompareTag("canPickUp") && highlight != selection)
             {
                 if (highlight.gameObject.GetComponent<Outline>() != null)
                 {

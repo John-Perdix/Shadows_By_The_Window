@@ -17,6 +17,8 @@ public class ClockTimeSystem : MonoBehaviour
     private GameObject currentPrefabInstance; // Reference to the currently instantiated prefab
     private int currentPrefabIndex = 0;
     public PressKeyOpenDoor pressKeyOpenDoor;
+    PickUpScript pickupScript;
+    public GameObject book;
 
 
     void Start()
@@ -24,6 +26,7 @@ public class ClockTimeSystem : MonoBehaviour
         InstructionTime.SetActive(false);
         currentPrefabInstance = Instantiate(prefabsToInstantiate[currentPrefabIndex]);
         currentPrefabIndex = (currentPrefabIndex + 1) % prefabsToInstantiate.Length;
+        pickupScript = GameObject.Find("heldObj").GetComponent<PickUpScript>();
     }
 
     void OnTriggerEnter(Collider collision)
@@ -50,30 +53,34 @@ public class ClockTimeSystem : MonoBehaviour
         {
             if (Action == true)
             {
-                        InstructionTime.SetActive(false);
-                        AnimeObject1.GetComponent<Animator>().Play("ClockAnime");
-                        //ThisTrigger.SetActive(false);
-                        SoundFX.Play();
-                        //Action = false;
+                if (pickupScript.heldObj == book)
+                {
+                    InstructionTime.SetActive(false);
+                    AnimeObject1.GetComponent<Animator>().Play("ClockAnime");
+                    //ThisTrigger.SetActive(false);
+                    SoundFX.Play();
+                    //Action = false;
 
-                        //Manage adding new objects
-                        // Delete the previous prefab instance if it exists
-                        if (currentPrefabInstance != null)
-                        {
-                            Destroy(currentPrefabInstance);
-                        }
-                        // Instantiate the new prefab
-                        currentPrefabInstance = Instantiate(prefabsToInstantiate[currentPrefabIndex], transform.position, transform.rotation);
-                        // Move to the next prefab in the array
-                        currentPrefabIndex = (currentPrefabIndex + 1) % prefabsToInstantiate.Length;
+                    //Manage adding new objects
+                    // Delete the previous prefab instance if it exists
+                    if (currentPrefabInstance != null)
+                    {
+                        Destroy(currentPrefabInstance);
+                    }
+                    // Instantiate the new prefab
+                    currentPrefabInstance = Instantiate(prefabsToInstantiate[currentPrefabIndex], transform.position, transform.rotation);
+                    // Move to the next prefab in the array
+                    currentPrefabIndex = (currentPrefabIndex + 1) % prefabsToInstantiate.Length;
 
 
-                        pressKeyOpenDoor = FindObjectOfType<PressKeyOpenDoor>();
-                        bool closed = pressKeyOpenDoor.windowClosed;
-                        if(closed == false){
-                            AnimejanelaEsq.GetComponent<Animator>().Play("close-window");
-                            AnimejanelaDir.GetComponent<Animator>().Play("close-window-dir");
-                        }
+                    pressKeyOpenDoor = FindObjectOfType<PressKeyOpenDoor>();
+                    bool closed = pressKeyOpenDoor.windowClosed;
+                    if (closed == false)
+                    {
+                        AnimejanelaEsq.GetComponent<Animator>().Play("close-window");
+                        AnimejanelaDir.GetComponent<Animator>().Play("close-window-dir");
+                    }
+                }
                 //}
                 //ORIGINAL CODE
                 /*Instruction.SetActive(false);
@@ -87,23 +94,23 @@ public class ClockTimeSystem : MonoBehaviour
 
     }
 
-/*
-    bool isAnimating = false;
-    void CheckAnimation()
-    {
-        // Get the current state information of the animator
-        AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
+    /*
+        bool isAnimating = false;
+        void CheckAnimation()
+        {
+            // Get the current state information of the animator
+            AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
 
-        // Check if the animation is playing
-        if ((currentState.IsName("open-window") || currentState.IsName("close-window")) && currentState.normalizedTime < 1.0f)
-        {
-            // Set the flag to indicate that the animation is currently playing
-            isAnimating = true;
-        }
-        else
-        {
-            // Reset the flag if the animation has finished playing
-            isAnimating = false;
-        }
-    }*/
+            // Check if the animation is playing
+            if ((currentState.IsName("open-window") || currentState.IsName("close-window")) && currentState.normalizedTime < 1.0f)
+            {
+                // Set the flag to indicate that the animation is currently playing
+                isAnimating = true;
+            }
+            else
+            {
+                // Reset the flag if the animation has finished playing
+                isAnimating = false;
+            }
+        }*/
 }
