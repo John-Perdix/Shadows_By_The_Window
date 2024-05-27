@@ -5,13 +5,11 @@ public class SetupButtonEvents : MonoBehaviour
 {
     void Start()
     {
-        Debug.Log($"{gameObject.name} SetupButtonEvents Start called");
 
         EventTrigger trigger = GetComponent<EventTrigger>();
         if (trigger == null)
         {
             trigger = gameObject.AddComponent<EventTrigger>();
-            Debug.Log($"{gameObject.name} EventTrigger component added");
         }
 
         // Pointer Enter
@@ -26,6 +24,5 @@ public class SetupButtonEvents : MonoBehaviour
         entryExit.callback.AddListener((eventData) => { GetComponent<ButtonHover>().OnPointerExit((PointerEventData)eventData); });
         trigger.triggers.Add(entryExit);
 
-        Debug.Log($"{gameObject.name} EventTrigger entries set up");
     }
 }

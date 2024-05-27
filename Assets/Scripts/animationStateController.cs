@@ -6,18 +6,23 @@ public class animationStateController : MonoBehaviour
 {
     Animator animator;
     int isWalkingHash;
+    int isVaultingHash;
+    PlayerMovement playerMovement;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         isWalkingHash = Animator.StringToHash("isWalking");
+        isVaultingHash = Animator.StringToHash("isVaulting");
+        playerMovement = GetComponentInParent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
         bool isWalking = animator.GetBool(isWalkingHash);
+        bool isVaulting = animator.GetBool(isVaultingHash);
         bool forwardPress = Input.GetKey("w");
         bool leftPress = Input.GetKey("a");
         bool rightPress = Input.GetKey("d");
@@ -35,5 +40,16 @@ public class animationStateController : MonoBehaviour
             animator.SetBool(isWalkingHash, false);
         }
 
+        // Vault animation
+        /* if (playerMovement.IsVaulting)
+        {
+            animator.SetBool(isVaultingHash, true);
+            Debug.Log("Starting vault animation");
+        }
+        else
+        {
+            animator.SetBool(isVaultingHash, false);
+            Debug.Log("Ending vault animation");
+        } */
     }
 }

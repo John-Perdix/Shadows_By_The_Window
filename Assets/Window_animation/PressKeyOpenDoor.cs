@@ -32,8 +32,7 @@ public class PressKeyOpenDoor : MonoBehaviour
         {
             InstructionOpen.SetActive(true);
             Action = true;
-            print("Colliding");
-            print(Action);
+            
         }
     }
 
