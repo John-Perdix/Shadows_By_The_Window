@@ -14,6 +14,7 @@ public class PickUpScript : MonoBehaviour
     private Rigidbody heldObjRb; //rigidbody of object we pick up
     private bool canDrop = true; //this is needed so we don't throw/drop object when rotating the object
     private int LayerNumber; //layer index
+    
 
     //Reference to script which includes mouse movement of player (looking around)
     //we want to disable the player looking around when rotating the object
@@ -36,10 +37,13 @@ public class PickUpScript : MonoBehaviour
                 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, pickUpRange))
                 {
                     //make sure pickup tag is attached
-                    if (hit.transform.gameObject.tag == "canPickUp" || hit.transform.gameObject.tag == "book")
+                    if (hit.transform.gameObject.tag == "canPickUp" || hit.transform.gameObject.tag == "book" || hit.transform.gameObject.tag == "key")
                     {
                         //pass in object hit into the PickUpObject function
                         PickUpObject(hit.transform.gameObject);
+                    } else if(hit.transform.CompareTag("ItemInventory")){
+                        Destroy(hit.transform.gameObject);
+                        ScoreSystem.scoreValue++;
                     }
                 }
             }

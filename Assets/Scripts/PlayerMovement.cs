@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
+    public float moveSprint;
     public float groundDrag;
 
     public float jumpForce;
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode shiftKey = KeyCode.LeftShift;
 
     [Header("Teleporting")]
     public LayerMask vaultableLayer;
@@ -51,10 +53,10 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hit;
         canTeleport = Physics.Raycast(rayStart, rayDirection, out hit, vaultDistance, vaultableLayer);
 
-        Debug.Log("Can Teleport: " + canTeleport);
+        //Debug.Log("Can Teleport: " + canTeleport);
         if (canTeleport)
         {
-            Debug.Log("Hit object: " + hit.collider.name);
+            // Debug.Log("Hit object: " + hit.collider.name);
         }
 
         MyInput();
@@ -77,21 +79,26 @@ public class PlayerMovement : MonoBehaviour
         // When to jump or teleport
         if (Input.GetKeyDown(jumpKey) && readyToJump)
         {
-            Debug.Log("Space key pressed");
+            //Debug.Log("Space key pressed");
 
             if (canTeleport)
             {
-                Debug.Log("Starting Teleport");
+                //Debug.Log("Starting Teleport");
                 Teleport();
             }
             else
             {
-                Debug.Log("Jumping");
+                //Debug.Log("Jumping");
                 readyToJump = false;
                 Jump();
                 Invoke(nameof(ResetJump), jumpCooldown);
             }
         }
+
+        if (Input.GetKeyDown(shiftKey)) { 
+            moveSpeed = moveSprint;
+        }
+
     }
 
     private void MovePlayer()
@@ -101,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
 
         // On ground 
         rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+
     }
 
     private void SpeedControl()

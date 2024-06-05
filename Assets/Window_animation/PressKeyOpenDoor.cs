@@ -7,6 +7,7 @@ public class PressKeyOpenDoor : MonoBehaviour
 {
     public GameObject InstructionOpen;
     public GameObject InstructionClose;
+    public GameObject InstructionGrabKey;
     public GameObject AnimeObject1;
     public GameObject AnimeObject2;
     public GameObject ThisTrigger;
@@ -14,25 +15,36 @@ public class PressKeyOpenDoor : MonoBehaviour
     public bool Action = false;
     public bool windowClosed = true;
     public Animator animator;
-    public GameObject[] prefabsToInstantiate; // Array of prefabs to cycle through
-    private GameObject currentPrefabInstance; // Reference to the currently instantiated prefab
-    private int currentPrefabIndex = 0;
+   //public GameObject[] prefabsToInstantiate; // Array of prefabs to cycle through
+    //private GameObject currentPrefabInstance; // Reference to the currently instantiated prefab
+    //private int currentPrefabIndex = 0;
+    PickUpScript pickupScript;
 
 
     void Start()
     {
         InstructionOpen.SetActive(false);
         InstructionClose.SetActive(false);
-
+        InstructionGrabKey.SetActive(false);
+        pickupScript = GameObject.Find("PlayerCam").GetComponent<PickUpScript>();
     }
 
     void OnTriggerEnter(Collider collision)
     {
+        bool hasKey = pickupScript.heldObj != null && pickupScript.heldObj.CompareTag("key");
         if (collision.transform.CompareTag("Player"))
         {
-            InstructionOpen.SetActive(true);
-            Action = true;
-            
+            if (hasKey)
+            {
+                InstructionOpen.SetActive(true);
+                Action = true;
+                print("Colliding");
+                print(Action);
+            }
+            else
+            {
+                InstructionGrabKey.SetActive(true);
+            }
         }
     }
 
@@ -40,6 +52,7 @@ public class PressKeyOpenDoor : MonoBehaviour
     {
         InstructionOpen.SetActive(false);
         InstructionClose.SetActive(false);
+        InstructionGrabKey.SetActive(false);
         Action = false;
     }
 
@@ -50,50 +63,46 @@ public class PressKeyOpenDoor : MonoBehaviour
         {
             if (Action == true)
             {
-                CheckAnimation();
-                if (!isAnimating)
+                if (pickupScript.heldObj.CompareTag("key"))
                 {
-                    if (windowClosed == true)
+                    CheckAnimation();
+                    if (!isAnimating)
                     {
-                        InstructionOpen.SetActive(false);
-                        InstructionClose.SetActive(true);
-                        AnimeObject1.GetComponent<Animator>().Play("open-window");
-                        AnimeObject2.GetComponent<Animator>().Play("open-window-dir");
-                        //ThisTrigger.SetActive(false);
-                        DoorOpenSound.Play();
-                        //Action = false;
-                        windowClosed = false;
-
-                        //Manage adding new objects
-                        // Delete the previous prefab instance if it exists
-                        if (currentPrefabInstance != null)
+                        if (windowClosed == true)
                         {
-                            Destroy(currentPrefabInstance);
+                            InstructionOpen.SetActive(false);
+                            InstructionClose.SetActive(true);
+                            AnimeObject1.GetComponent<Animator>().Play("open-window");
+                            AnimeObject2.GetComponent<Animator>().Play("open-window-dir");
+                            //ThisTrigger.SetActive(false);
+                            DoorOpenSound.Play();
+                            //Action = false;
+                            windowClosed = false;
+
+                            //Manage adding new objects
+                            // Delete the previous prefab instance if it exists
+                            /*if (currentPrefabInstance != null)
+                            {
+                                Destroy(currentPrefabInstance);
+                            }
+                            // Instantiate the new prefab
+                            currentPrefabInstance = Instantiate(prefabsToInstantiate[currentPrefabIndex], transform.position, transform.rotation);
+                            // Move to the next prefab in the array
+                            currentPrefabIndex = (currentPrefabIndex + 1) % prefabsToInstantiate.Length;*/
                         }
-                        // Instantiate the new prefab
-                        currentPrefabInstance = Instantiate(prefabsToInstantiate[currentPrefabIndex], transform.position, transform.rotation);
-                        // Move to the next prefab in the array
-                        currentPrefabIndex = (currentPrefabIndex + 1) % prefabsToInstantiate.Length;
-                    }
-                    else
-                    {
-                        InstructionOpen.SetActive(true);
-                        InstructionClose.SetActive(false);
-                        AnimeObject1.GetComponent<Animator>().Play("close-window");
-                        AnimeObject2.GetComponent<Animator>().Play("close-window-dir");
-                        //ThisTrigger.SetActive(false);
-                        DoorOpenSound.Play();
-                        windowClosed = true;
-                        //Action = false;
+                        else
+                        {
+                            InstructionOpen.SetActive(true);
+                            InstructionClose.SetActive(false);
+                            AnimeObject1.GetComponent<Animator>().Play("close-window");
+                            AnimeObject2.GetComponent<Animator>().Play("close-window-dir");
+                            //ThisTrigger.SetActive(false);
+                            DoorOpenSound.Play();
+                            windowClosed = true;
+                            //Action = false;
+                        }
                     }
                 }
-                //ORIGINAL CODE
-                /*Instruction.SetActive(false);
-                AnimeObject1.GetComponent<Animator>().Play("open-window");
-                AnimeObject2.GetComponent<Animator>().Play("open-window-dir");
-                ThisTrigger.SetActive(false);
-                DoorOpenSound.Play();
-                Action = false; */
             }
         }
 

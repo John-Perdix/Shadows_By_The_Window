@@ -7,6 +7,8 @@ TagManager:
   - Selectable
   - canPickUp
   - book
+  - ItemInventory
+  - key
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - 
   - whatIsGround
   - Vaultable
-  - 
+  - UiInstruction Layer
   - 
   - 
   - 
