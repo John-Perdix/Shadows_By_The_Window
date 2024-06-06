@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed;
+    public float normalSpeed;
     public float moveSprint;
+    private float moveSpeed;
     public float groundDrag;
 
     public float jumpForce;
@@ -42,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         Debug.Log("PlayerMovement script started");
+        moveSpeed = normalSpeed;
     }
 
     private void Update()
@@ -95,8 +98,13 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(shiftKey)) { 
+        if (Input.GetKeyDown(shiftKey))
+        {
             moveSpeed = moveSprint;
+        }
+        else if (Input.GetKeyUp(shiftKey))
+        {
+            moveSpeed = normalSpeed;
         }
 
     }
